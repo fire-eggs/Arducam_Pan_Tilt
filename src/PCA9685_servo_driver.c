@@ -28,6 +28,10 @@ void PCA9685_reset(void) {
   delay_ms(10);
 }
 
+// Track the pulselength for the specified PWM frequency.
+// The pulselength is a fixed value for said frequency.
+double pulselength = 0.0;
+
 /**************************************************************************/
 /*! 
     @brief  Sets the PWM frequency for the entire chip, up to ~1.6 KHz
@@ -35,6 +39,13 @@ void PCA9685_reset(void) {
 */
 /**************************************************************************/
 void PCA9685_setPWMFreq(float freq) {
+    
+  pulselength = 1000;   // 1,000 ms per second 
+  pulselength /= freq;
+  pulselength /= 4096;  
+  pulselength = 1.0 / pulselength;  
+  //printf("SPWMF: freq: %g pulselength: %g\n", freq, pulselength);    
+    
   freq *= 0.9;  // Correct for overshoot in the frequency setting.
   float prescaleval = 25000000;
   prescaleval /= 4096;
@@ -115,15 +126,12 @@ void PCA9685_setPin(uint8_t num, uint16_t val, _Bool invert)
 */
 /**************************************************************************/
 void setServoPulse(uint8_t n, double pulse) {
-   double pulselength;
    
-   pulselength = 1000;   // 1,000 ms per second 
-   pulselength /= 60;   // 60 Hz
-   pulselength /= 4096;  
-   pulse *= 1000; //ms
-   pulse /= pulselength;
-   PCA9685_setPWM(n, 0, pulse);
+    // KBR simplification. Use the calculated pulselength determined
+    // by setting the PWM frequency.
+   PCA9685_setPWM(n, 0, pulse * pulselength);
 }
+
 /**************************************************************************/
 /*! 
     @brief  Set the rotation degree of the servo.
@@ -138,7 +146,10 @@ void setServoDegree(uint8_t n, double Degree){
     else if(Degree <= 0){
       Degree = 0;
     }
-    double pulse = (Degree + 45) / (90.0 * 1000);
+    // KBR simplification. Along with the changes to setServoPulse,
+    // eliminate extra math.
+    //double pulse = (Degree + 45) / (90.0 * 1000);
+    double pulse = (Degree + 45) / 90.0;
     setServoPulse(n, pulse);
 }
 
