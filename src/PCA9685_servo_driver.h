@@ -47,8 +47,8 @@ typedef unsigned short     int uint16_t;
 #define SERVO_UP_CH  0       //The upper servo Channel
 #define SERVO_DOWN_CH  1     //The under servo Channel
 
-extern uint8_t ServoUpDegree;
-extern uint8_t ServoDownDegree;
+extern double ServoUpDegree;
+extern double ServoDownDegree;
 
   void PCA9685_reset(void);
   void PCA9685_init(uint8_t i2caddr);
@@ -56,9 +56,9 @@ extern uint8_t ServoDownDegree;
   void PCA9685_setPWM(uint8_t num, uint16_t on, uint16_t off);
   void PCA9685_Pin(uint8_t num, uint16_t val, _Bool invert);
   void setServoPulse(uint8_t n, double pulse);
-  void setServoDegree(uint8_t n, uint8_t Degree);
-  int ServoDegreeDecrease(uint8_t Channel, uint8_t Step);
-  int ServoDegreeIncrease(uint8_t Channel, uint8_t Step);
+  void setServoDegree(uint8_t n, double Degree);
+  int ServoDegreeDecrease(uint8_t Channel, double Step);
+  int ServoDegreeIncrease(uint8_t Channel, double Step);
 
   unsigned char wrSensorReg8_8(int regID, int regDat);
   unsigned char rdSensorReg8_8(unsigned char regID, unsigned char* regDat);

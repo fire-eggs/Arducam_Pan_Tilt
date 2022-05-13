@@ -131,7 +131,7 @@ void setServoPulse(uint8_t n, double pulse) {
     @param  Degree.
 */
 /**************************************************************************/
-void setServoDegree(uint8_t n, uint8_t Degree){
+void setServoDegree(uint8_t n, double Degree){
     if(Degree >= 180){
       Degree = 180;
     }
@@ -149,7 +149,7 @@ void setServoDegree(uint8_t n, uint8_t Degree){
     @param  The increased value.
 */
 /**************************************************************************/
-int ServoDegreeIncrease(uint8_t Channel, uint8_t Step){
+int ServoDegreeIncrease(uint8_t Channel, double Step){
     switch(Channel){
         case SERVO_UP_CH:
             if(ServoUpDegree >= SERVO_UP_MAX){
@@ -186,7 +186,7 @@ int ServoDegreeIncrease(uint8_t Channel, uint8_t Step){
     @param  The decreased value.
 */
 /**************************************************************************/
-int ServoDegreeDecrease(uint8_t Channel, uint8_t Step){
+int ServoDegreeDecrease(uint8_t Channel, double Step){
     switch(Channel){
         case SERVO_UP_CH:
             if(ServoUpDegree <= SERVO_UP_MIN + Step){
