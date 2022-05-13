@@ -3,8 +3,8 @@
 #include <pthread.h>
 #include <signal.h>
 
-uint8_t ServoUpDegree = 90;
-uint8_t ServoDownDegree = 90;
+double ServoUpDegree = 90;
+double ServoDownDegree = 90;
 pthread_t manualFocusPthreadID;
 
 int get_key_board_from_termios()
@@ -21,6 +21,11 @@ int get_key_board_from_termios()
     tcsetattr(0, TCSANOW, &old_config);
     return key_value;
 }
+
+#ifdef STEP
+#undef STEP
+#define STEP 0.25
+#endif
 
 void processKeyboardEvent(void){
     int keyVal = 0;
