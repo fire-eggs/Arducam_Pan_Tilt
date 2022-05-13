@@ -1,6 +1,12 @@
 NAME=RunServoDemo
 CC=gcc
-CFLAGS=-Wall -pthread -lm -g
+
+# -Wall : produce all warnings
+# -pthread : add multithreading support via pthreads library
+# -lm : link against the m (math) library
+# -g  : produce debugging info
+CFLAGS=-Wall -pthread -lm -g -O0
+
 ODIR=obj
 SDIR=src
 
